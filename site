@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Spinning Wheel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="wheel">
+  <div class="segment" style="--i:0;">1</div>
+  <div class="segment" style="--i:1;">2</div>
+  <div class="segment" style="--i:2;">3</div>
+  <div class="segment" style="--i:3;">4</div>
+  <div class="segment" style="--i:4;">5</div>
+  <div class="segment" style="--i:5;">6</div>
+  <div class="segment" style="--i:6;">7</div>
+  <div class="segment" style="--i:7;">8</div>
+</div>
+<button onclick="spin()">Spin</button>
+<script src="script.js"></script>
+</body>
+</html>
+#wheel {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 10px solid #333;
+  position: relative;
+  overflow: hidden;
+  transform: rotate(22.5deg);
+}
+
+.segment {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  line-height: 300px;
+  font-size: 24px;
+  color: white;
+  transform-origin: 50% 50%;
+  transform: rotate(calc(45deg * var(--i))) skewY(-45deg);
+  background-color: hsl(calc(45 * var(--i)), 100%, 50%);
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+function spin() {
+  const wheel = document.getElementById('wheel');
+  let deg = Math.floor(5000 + Math.random() * 5000); // Random degree from 5000 to 10000
+  wheel.style.transition = 'all 5s ease-out';
+  wheel.style.transform = `rotate(${deg}deg)`;
+  wheel.addEventListener('transitionend', () => {
+    wheel.style.transition = 'none';
+    wheel.style.transform = `rotate(${deg % 360}deg)`;
+  });
+}
